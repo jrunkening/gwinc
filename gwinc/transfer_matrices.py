@@ -4,8 +4,8 @@ import scipy.constants as const
 
 
 class Squeezer:
-    r"""
-    The `Squeezer` is represented by the operator :math:`\mathcal{S}(\sigma, \phi)`.
+    """
+    The `Squeezer` is represented by the operator :math:`\\mathcal{S}(\\sigma, \\phi)`.
 
     :math:`\mathcal{S}(\sigma, \phi) = \mathcal{R}(\phi) \mathcal{S}(\sigma, \phi) \mathcal{R}(-\phi)`
     :math:`= \mathcal{R}_\phi \mathcal{S}_\sigma \mathcal{R}_\phi^\dagger`
@@ -45,3 +45,11 @@ class Squeezer:
     def transfer(self):
         return self.transfer_coefficient_injection_loss * \
             self.rotation.dot(self.squeezing).dot(self.rotation_dagger)
+
+
+class FilterCavity:
+    r"""
+    """
+
+    def __init__(self) -> None:
+        pass
