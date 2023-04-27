@@ -1,13 +1,13 @@
 Welcome to gwinc's documentation!
 ======================================
 
-This is a repository to demonstrate how to build a Python package.
+Gravitational Wave Interferometer Noise Calculator.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents
 
-   transfer_matrix
+   transfer_matrices
 
 Indices and tables
 ==================

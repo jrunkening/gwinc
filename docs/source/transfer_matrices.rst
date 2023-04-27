@@ -1,7 +1,7 @@
 Transfer Matrices
 ==========================
 
-.. automodule:: __main__
+.. automodule:: transfer_matrices
     :members:
     :undoc-members:
     :show-inheritance:

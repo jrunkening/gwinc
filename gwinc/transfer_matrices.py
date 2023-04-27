@@ -29,6 +29,3 @@ class Squeezer:
         self.injection_loss = injection_loss
         self.transfer_coefficient_injection_loss = np.sqrt(1-self.injection_loss)
 
-
-if __name__ == "__main__":
-    Squeezer()
