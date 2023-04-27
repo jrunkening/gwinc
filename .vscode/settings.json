@@ -2,8 +2,10 @@
     "cSpell.words": [
         "detuning",
         "hbar",
+        "linalg",
         "linspace",
         "loglog",
+        "mathcal",
         "matplotlib",
         "pyplot",
         "scipy",

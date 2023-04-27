@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+    tags: ['*']
+  pull_request:
+
+concurrency:
+  # Skip intermediate builds: always.
+  # Cancel intermediate builds: only if it is a pull request build.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+        poetry-version: ["1.4.2"]
+        os: [windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Install Deps
+        run: poetry install
+
+      - name: Run pytest
+        run: poetry run python -m pytest -vs --cov-report=xml --cov
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
