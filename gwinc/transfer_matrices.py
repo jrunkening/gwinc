@@ -28,4 +28,3 @@ class Squeezer:
         self.squeezing_angle = squeezing_angle
         self.injection_loss = injection_loss
         self.transfer_coefficient_injection_loss = np.sqrt(1-self.injection_loss)
-
