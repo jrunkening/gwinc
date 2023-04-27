@@ -7,8 +7,8 @@ class Squeezer:
     """
     The `Squeezer` is represented by the operator :math:`\\mathcal{S}(\\sigma, \\phi)`.
 
-    :math:`\mathcal{S}(\sigma, \phi) = \mathcal{R}(\phi) \mathcal{S}(\sigma, \phi) \mathcal{R}(-\phi)`
-    :math:`= \mathcal{R}_\phi \mathcal{S}_\sigma \mathcal{R}_\phi^\dagger`
+    :math:`\\mathcal{S}(\\sigma, \\phi) = \\mathcal{R}(\\phi) \\mathcal{S}(\\sigma, \\phi) \\mathcal{R}(-\\phi)`
+    :math:`= \\mathcal{R}_\\phi \\mathcal{S}_\\sigma \\mathcal{R}_\\phi^\\dagger`
 
     Args:
         * `self` (`Squeezer`): A squeezer.
