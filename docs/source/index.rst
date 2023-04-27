@@ -7,8 +7,7 @@ This is a repository to demonstrate how to build a Python package.
    :maxdepth: 2
    :caption: Contents
 
-   rock_paper_scissors
-   untested
+   transfer_matrix
 
 Indices and tables
 ==================

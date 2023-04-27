@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "abatilo",
         "automodule",
         "detuning",
         "genindex",
@@ -14,6 +15,7 @@
         "maxdepth",
         "modindex",
         "Ning",
+        "nojekyll",
         "pyplot",
         "scipy",
         "toctree",
