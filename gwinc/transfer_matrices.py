@@ -14,7 +14,8 @@ class Squeezer:
         * `self` (`Squeezer`): A squeezer.
         * `squeezing_factor` (`float`): Squeezing factor in dB.
         * `squeezing_angle,` (`float`): Squeezing angle in rad.
-        * `injection_loss` (`float`): The loss that combined all of the input losses together into a single frequency-independent loss.
+        * `injection_loss` (`float`): The loss that combined all of the
+        input losses together into a single frequency-independent loss.
     """
 
     def __init__(
