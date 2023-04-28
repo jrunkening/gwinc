@@ -1,4 +1,5 @@
 import abc
+from typing import List
 import numpy as np
 from numpy import linalg as la
 import scipy.constants as const
@@ -8,6 +9,13 @@ class AbstractComponent(abc.ABC):
     @abc.abstractmethod
     def gen_transfer_matrix(self) -> np.array:
         return NotImplemented
+
+
+def build_transfer_matrix(components: List[AbstractComponent]):
+    return lambda signal_sideband_frequency: np.prod([
+        component.gen_transfer_matrix()(signal_sideband_frequency)
+        for component in components[::-1]
+    ])
 
 
 class Squeezer(AbstractComponent):
@@ -31,6 +39,7 @@ class Squeezer(AbstractComponent):
         squeezing_angle: float, # \\phi
         squared_injection_loss: float # \\Lambda_{inj}^2
     ) -> None:
+        super().__init__()
         self.squeezing_factor = squeezing_factor / (20*np.log10(np.exp(1)))
         self.squeezing_angle = squeezing_angle
         self.squared_injection_loss = squared_injection_loss
@@ -47,7 +56,7 @@ class Squeezer(AbstractComponent):
             [np.cos(self.squeezing_angle), np.sin(self.squeezing_angle)],
             [-np.sin(self.squeezing_angle), np.cos(self.squeezing_angle)]
         ]) # \\mathcal{R}^\\dagger
-        self.squared_injection_loss_transfer_coefficient = np.sqrt(1-self.squared_injection_loss) # \\tau_{inj}
+        self.injection_loss_transfer_coefficient = np.sqrt(1-self.squared_injection_loss) # \\tau_{inj}
 
     def gen_transfer_matrix(self) -> np.array:
         """
@@ -61,7 +70,7 @@ class Squeezer(AbstractComponent):
             * (`np.array`): The transfer matrix.
         """
 
-        return lambda _: self.squared_injection_loss_transfer_coefficient * \
+        return lambda _: self.injection_loss_transfer_coefficient * \
             self.rotation.dot(self.squeezing).dot(self.rotation_dagger)
 
 
@@ -91,6 +100,7 @@ class FilterCavity(AbstractComponent):
         sum_of_all_squeezed_local_oscillator_higher_order_mode_coupling_coefficients: float, # \\Sigma |c_n|^2
         mode_mismatch_phase_ambiguity: float, # \\phi_{mm}
     ) -> None:
+        super().__init__()
         self.squared_input_mirror_transmission = squared_input_mirror_transmission
         self.squared_round_trip_loss = squared_round_trip_loss
         self.filter_cavity_length = filter_cavity_length
@@ -196,3 +206,22 @@ class FilterCavity(AbstractComponent):
         return lambda signal_sideband_frequency: \
             self.first_order_mode_mismatch * self.gen_filter_cavity_transfer_matrix()(signal_sideband_frequency) + \
             self.gen_mode_matching_transfer_matrix()(signal_sideband_frequency)
+
+
+class Readout(AbstractComponent):
+    def __init__(
+        self,
+        squared_readout_loss: float # \\Lambda_{ro}^2
+    ) -> None:
+        super().__init__()
+        self.squared_readout_loss = squared_readout_loss
+        self.readout_loss_transfer_coefficient = np.sqrt(1 - self.squared_readout_loss) # \\tuo_{ro}
+        self.conversion_matrix = 1/np.sqrt(2) * np.array([
+            [1, 1],
+            [-1j, 1j]
+        ]) # \\mathcal{A}_2
+
+    def gen_transfer_matrix(self) -> np.array:
+        return lambda _: self.readout_loss_transfer_coefficient * np.identity(
+            self.conversion_matrix.shape[0]
+        )
