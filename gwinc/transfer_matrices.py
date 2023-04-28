@@ -12,7 +12,7 @@ class AbstractComponent(abc.ABC):
 
 
 def build_transfer_matrix(components: List[AbstractComponent]):
-    return lambda signal_sideband_frequency: np.prod([
+    return lambda signal_sideband_frequency: la.multi_dot([
         component.gen_transfer_matrix()(signal_sideband_frequency)
         for component in components[::-1]
     ])
