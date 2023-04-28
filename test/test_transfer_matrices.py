@@ -1,3 +1,4 @@
+import numpy as np
 from gwinc.transfer_matrices import Squeezer, FilterCavity
 
 
@@ -18,5 +19,8 @@ def test_filter_cavity():
         carrier_wavelength = 1064,
         detuning = 0.1,
         filter_cavity_length_error = 0,
+        sum_of_all_squeezed_filter_cavity_higher_order_mode_coupling_coefficients = 0.06,
+        sum_of_all_squeezed_local_oscillator_higher_order_mode_coupling_coefficients = 0.02,
+        mode_mismatch_phase_ambiguity = 2*np.pi
     )
     s.gen_transfer_matrix()(0)
