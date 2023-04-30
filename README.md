@@ -2,7 +2,7 @@
 
 Gravitational Wave Interferometer Noise Calculator
 
-| *Build Status* | *Documents* |
+| *Build Status* | *Documentation* |
 |:--------------:|:-----------:|
 | [![ci badge]][ci link]<br>[![codecov badge]][codecov link]<br>[![doc badge]][doc link]<br>[![pages badge]][pages link] | [![website badge]][website link] |
 
