@@ -7,8 +7,10 @@
         "genindex",
         "gwinc",
         "hbar",
+        "homodyne",
         "Jing",
         "linalg",
+        "linestyle",
         "linspace",
         "loglog",
         "mathcal",
@@ -23,8 +25,10 @@
         "transmissivity",
         "undoc",
         "xlabel",
+        "xlim",
         "xscale",
         "ylabel",
+        "ylim",
         "yscale"
     ]
 }
