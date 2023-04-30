@@ -71,3 +71,7 @@ noise = build_noise(
 ```
 
 ![](gallery/demo.png)
+
+## Example
+
+The example of simulate the noise curve can be found [here](https://github.com/jrunkening/gwinc/blob/main/notebook/demo.ipynb).
