@@ -8,6 +8,7 @@ Gravitational Wave Interferometer Noise Calculator.
    :caption: Contents
 
    transfer_matrices
+   noise
 
 Indices and tables
 ==================
