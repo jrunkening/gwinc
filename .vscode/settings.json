@@ -14,6 +14,7 @@
         "linestyle",
         "linspace",
         "loglog",
+        "logspace",
         "mathcal",
         "matplotlib",
         "maxdepth",

@@ -7,6 +7,7 @@ def test_squeezer():
     s = Squeezer(
         squeezing_factor = 10,
         squeezing_angle = 0,
+        phase_error = 30,
         squared_injection_loss = 0.32
     )
     print(s.gen_transfer_matrix()(0))
@@ -39,6 +40,7 @@ def test_build_transfer_matrix():
         Squeezer(
             squeezing_factor = 10,
             squeezing_angle = 0,
+            phase_error = 30,
             squared_injection_loss = 0.32
         ),
         FilterCavity(
