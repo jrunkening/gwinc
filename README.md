@@ -43,23 +43,24 @@ This project is implemented to simulate the power spectral density of quantum no
 ```python
 transfer_matrix = build_transfer_matrix([
     Squeezer(
-        squeezing_factor = 10,
+        squeezing_factor = r,
         squeezing_angle = 0,
-        squared_injection_loss = 0.32
+        phase_error = 30e-3,
+        squared_injection_loss = 0.05
     ),
     FilterCavity(
-        squared_input_mirror_transmission = 0.00136,
-        squared_round_trip_loss = 120e-6,
-        filter_cavity_length = 300,
+        squared_input_mirror_transmission = 66.3e-6,
+        squared_round_trip_loss = 16e-6,
+        filter_cavity_length = 55,
         carrier_wavelength = 1064,
-        detuning = 0.1,
-        filter_cavity_length_error = 0,
+        detuning = 48,
+        filter_cavity_length_error = 0.3e-12,
         sum_of_all_squeezed_filter_cavity_higher_order_mode_coupling_coefficients = 0.06,
         sum_of_all_squeezed_local_oscillator_higher_order_mode_coupling_coefficients = 0.02,
         mode_mismatch_phase_ambiguity = 2*np.pi
     ),
     Readout(
-        squared_readout_loss = 0.06
+        squared_readout_loss = 0.05
     )
 ])
 

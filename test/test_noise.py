@@ -8,7 +8,7 @@ from gwinc.transfer_matrices import build_transfer_matrix
 def test_build_noise():
     t = build_transfer_matrix([
         Squeezer(
-            squeezing_factor = 10,
+            squeezing_factor = 1.05,
             squeezing_angle = 0,
             phase_error = 30,
             squared_injection_loss = 0.32
