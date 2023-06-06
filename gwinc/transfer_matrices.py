@@ -32,6 +32,7 @@ class Squeezer(AbstractComponent):
         * `self` (`Squeezer`): A squeezer.
         * `squeezing_factor` (`float`): Squeezing factor in dB.
         * `squeezing_angle` (`float`): Squeezing angle in rad.
+        * `phase_error` (`float`): Frequency-independent phase noise.
         * `squared_injection_loss` (`float`): The loss that combined all of the \
             input losses together into a single frequency-independent loss.
     """
@@ -40,26 +41,32 @@ class Squeezer(AbstractComponent):
         self,
         squeezing_factor: float, # \\sigma
         squeezing_angle: float, # \\phi
+        phase_error, # frequency-independent phase noise
         squared_injection_loss: float # \\Lambda_{inj}^2
     ) -> None:
         super().__init__()
         self.squeezing_factor = squeezing_factor / (20*np.log10(np.exp(1)))
         self.squeezing_angle = squeezing_angle
+        self.phase_error = phase_error
         self.squared_injection_loss = squared_injection_loss
 
         self.squeezing = np.array([
             [np.exp(self.squeezing_factor), 0],
             [0, np.exp(-self.squeezing_factor)]
         ]) # \\mathcal{S}
-        self.rotation = np.array([
-            [np.cos(self.squeezing_angle), -np.sin(self.squeezing_angle)],
-            [np.sin(self.squeezing_angle), np.cos(self.squeezing_angle)]
-        ]) # \\mathcal{R}
-        self.rotation_dagger = np.array([
-            [np.cos(self.squeezing_angle), np.sin(self.squeezing_angle)],
-            [-np.sin(self.squeezing_angle), np.cos(self.squeezing_angle)]
-        ]) # \\mathcal{R}^\\dagger
         self.injection_loss_transfer_coefficient = np.sqrt(1-self.squared_injection_loss) # \\tau_{inj}
+
+    def gen_rotation(self, squeezing_angle, phase_error) -> np.array: # \\mathcal{R}
+        return np.array([
+            [np.cos(squeezing_angle + phase_error), -np.sin(squeezing_angle + phase_error)],
+            [np.sin(squeezing_angle + phase_error), np.cos(squeezing_angle + phase_error)]
+        ])
+
+    def gen_rotation_dagger(self, squeezing_angle, phase_error) -> np.array: # \\mathcal{R}^\\dagger
+        return np.array([
+            [np.cos(squeezing_angle + phase_error), np.sin(squeezing_angle + phase_error)],
+            [-np.sin(squeezing_angle + phase_error), np.cos(squeezing_angle + phase_error)]
+        ])
 
     def gen_transfer_matrix(self) -> np.array:
         """
@@ -73,8 +80,10 @@ class Squeezer(AbstractComponent):
             * (`np.array`): The transfer matrix.
         """
 
-        return lambda _: self.injection_loss_transfer_coefficient * \
-            self.rotation.dot(self.squeezing).dot(self.rotation_dagger)
+        return lambda _: self.injection_loss_transfer_coefficient * (
+            self.gen_rotation(self.squeezing_angle, self.phase_error).dot(self.squeezing).dot(self.gen_rotation_dagger(self.squeezing_angle, self.phase_error)) + \
+            self.gen_rotation(self.squeezing_angle, -self.phase_error).dot(self.squeezing).dot(self.gen_rotation_dagger(self.squeezing_angle, -self.phase_error))
+        ) / 2
 
 
 class FilterCavity(AbstractComponent):
