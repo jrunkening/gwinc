@@ -1,7 +1,7 @@
-Rock-Paper-Scissors Game
+Noise
 ==========================
 
-.. automodule:: rock_paper_scissors
+.. automodule:: noise
     :members:
     :undoc-members:
     :show-inheritance:
