@@ -43,7 +43,7 @@ This project is implemented to simulate the power spectral density of quantum no
 ```python
 transfer_matrix = build_transfer_matrix([
     Squeezer(
-        squeezing_factor = r,
+        squeezing_factor = 1.05,
         squeezing_angle = 0,
         phase_error = 30e-3,
         squared_injection_loss = 0.05
